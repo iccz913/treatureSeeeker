@@ -62,7 +62,7 @@ CGFloat static itemPadding = 6;
     self.gameStatusLabel.text = @"Round 1";
     self.gameStatusLabel.hidden = NO;
     
-    [self startGame];
+    [self performSelector:@selector(startGame) withObject:NULL afterDelay:1.5];
 }
 
 -(void) startGame
@@ -104,6 +104,7 @@ CGFloat static itemPadding = 6;
     [self.gm prepareNewGame];
     self.gameProgressButton.userInteractionEnabled = YES;
     [self.gameProgressButton setTitle:@"Start" forState:UIControlStateNormal];
+    [self.gameBoardCollectionView reloadData];
 }
 
 
@@ -167,7 +168,18 @@ CGFloat static itemPadding = 6;
     
     UIImageView * image = [[UIImageView alloc] initWithImage: [UIImage imageNamed: colorName]];
     image.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
+    
     [cell.contentView addSubview: image];
+    
+    
+    if([aLocation samePosition:self.gm.map.priceLocation])
+    {
+        UIImageView * dollar = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"DollarSign"]];
+        dollar.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
+        
+        [cell.contentView addSubview: dollar];
+    }
+    
 
     return cell;
 }
